@@ -204,6 +204,252 @@ exports.options = {
           }
         }
       }
-    }
+    },
+    "/api/products":{
+        "get":{
+          "tags":["Products"],
+          "description": "Return all products",
+          "responses":{
+            "200": {
+              "description":"A list of products",
+              "content":{
+                "application/json":{
+                  "schema":{
+                    "type":"array",
+                    "items":{
+                      "$ref":"#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post":{
+          "tags": ["Products"],
+          "description":"Create new product",
+          "requestBody":{
+            "description":"Product schema to insert",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "product": {"type":"string"},
+                    "description": {"type":"string"},
+                    "cost": {"type":"number"},
+                    "quantity": {"type":"number"}
+                  }
+                }
+              }
+            }
+          },
+          "responses":{
+            "200":{
+              "description": "New product inserted"
+            }
+          }
+        }
+      },
+      "/api/products/{product}":{
+        "get":{
+          "tags":["Products"],
+          "parameters":[
+            {
+              "name":"product",
+              "in":"path",
+              "required":true,
+              "description": "name of product that we want to find",
+              "type":"string"
+            }
+          ],
+          "description":"Get product with specific title",
+          "responses":{
+            "200":{
+              "description":"product to find",
+              "schema":{
+                "$ref":"#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "patch":{
+          "tags":[ "Products" ],
+          "description":"Update product in app",
+          "parameters":[
+            {
+              "name":"product",
+              "in":"path",
+              "required":true,
+              "description":"Name of product to update",
+              "type":"string"
+            },
+          ],
+          "requestBody":{
+            "description": "product that we update",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "product": {"type":"string"},
+                    "description": {"type":"string"},
+                    "cost": {"type":"number"},
+                    "quantity": {"type":"number"}
+                  }
+                }
+              }
+            }
+          },
+          "responses":{
+            "200": {
+              "description": "Update product",
+              "schema":{
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "delete":{
+          "tags":["Products"],
+          "description":"Delete a product",
+          "parameters":[
+            {
+              "name":"product",
+              "in":"path",
+              "description":"Product to delete",
+              "type":"string"
+            },
+          ],
+          "responses":{
+            "200":{
+              "description":"Delete a product"
+            }
+          }
+        }
+      },
+      "/api/user-products":{
+        "get":{
+          "tags":["Users and Products"],
+          "description": "Return all Users products",
+          "responses":{
+            "200": {
+              "description":"A list of all the products of all users",
+              "content":{
+                "application/json":{
+                  "schema":{
+                    "type":"array",
+                    "items":{
+                      "$ref":"#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post":{
+          "tags": ["Users and Products"],
+          "description":"Create new product for a user",
+          "requestBody":{
+            "description":"User schema to insert",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/Product",
+                  "properties":{
+                    "product": {"type":"string"},
+                    "description": {"type":"string"},
+                    "cost": {"type":"number"},
+                    "quantity": {"type":"number"}
+                  }
+                }
+              }
+            }
+          },
+          "responses":{
+            "200":{
+              "description": "New product inserted"
+            }
+          }
+        }
+      },
+      "/api/user-products/{username}":{
+        "get":{
+          "tags":["Users and Products"],
+          "parameters":[
+            {
+              "name":"username",
+              "in":"path",
+              "required":true,
+              "description": "selected user",
+              "type":"string"
+            }
+          ],
+          "description":"Return all User's products",
+          "responses":{
+            "200":{
+              "description":"products to find for the user",
+              "schema":{
+                "$ref":"#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "patch":{
+          "tags":[ "Users and Products" ],
+          "description":"Update product of a user",
+          "parameters":[
+            {
+              "name":"username",
+              "in":"path",
+              "required":true,
+              "description":"username of user to update product",
+              "type":"string"
+            },
+          ],
+          "requestBody":{
+            "description": "product that we update",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "product": {"type":"string"},
+                    "description": {"type":"string"},
+                    "cost": {"type":"number"},
+                    "quantity": {"type":"number"}
+                  }
+                }
+              }
+            }
+          },
+          "responses":{
+            "200": {
+              "description": "Update product",
+              "schema":{
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "delete":{
+          "tags":["Users and Products"],
+          "description":"Delete a product from a user",
+          "parameters":[
+            {
+              "name":"username",
+              "in":"path",
+              "description":"user to delete product from",
+              "type":"string"
+            },
+          ],
+          "responses":{
+            "200":{
+              "description":"Delete a product"
+            }
+          }
+        }
+      }
   }
 }
